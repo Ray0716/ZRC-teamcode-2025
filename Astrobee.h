@@ -68,6 +68,20 @@ public:
     int GetObjectMass(int obj);
 
     /**
+     * Gets the score awarded for moving an object out of the field.
+     * @param obj The Object ID.
+     * @return The score awarded for the object.
+     */
+    int GetObjectScore(int obj);
+
+    /**
+     * Gets the penalty incurred for leaving an object inside the field.
+     * @param obj The Object ID.
+     * @return The penalty incurred for the object.
+     */
+    int GetObjectPenalty(int obj);
+
+    /**
      * Moves the robot to a particular location on the playing field.
      * @param x The X-coordinate of the destination.
      * @param y The Y-coordinate of the destination.
