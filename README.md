@@ -1,7 +1,7 @@
 <br/>
 <div align="center">
 <a href="h[ttps://github.com/ShaanCoding/makeread.me](https://github.com/Ray0716/teenhacks-2025)">
-<img src="logo.png" alt="Logo" width=900px height=auto > 
+<img src="logo.png" alt="Logo" width=700px height=auto > 
 </a>
 <h1 align="center">Zero Robotics Competition ICPS Team Code 2025</h3>
 <p align="center">
