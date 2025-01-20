@@ -14,7 +14,6 @@ class Position
 public:
     const float x = 0.0f;
     const float y = 0.0f;
-    // Position() : x(0.0f), y(0.0f) {}
     Position(float x, float y) : x(x), y(y) {}
     double DistanceTo(Position *other) const
     {
@@ -28,6 +27,14 @@ public:
     {
         return DistanceTo(GetRobotPosition());
     };
+    Position Midpoint(Position *other) const
+    {
+        return Position((this->x + other->x) / 2, (this->y + other->y) / 2);
+    }
+    Position Midpoint(Position &other) const
+    {
+        return Midpoint(&other);
+    }
 };
 
 enum DebrisType
@@ -263,9 +270,57 @@ Debris *GetNearestDebris()
     return &DebrisList[nearestId];
 }
 
-bool checkCollision(Position linePos1, Position linePos2)
+bool checkLineCollisions(Position &linePos1, Position &linePos2)
 {
+    int m = (linePos1.y - linePos2.y) / (linePos1.x - linePos2.x);
+    int b = linePos1.y - m * linePos1.x;
 
+    // Use the line equation to check for collisions in each Debris.
+    for (int i = 0; i < 15; i++)
+    {
+        Debris debris = DebrisList[i];
+        Position position = debris.GetLocation();
+        int leftBound = position.x - debris.width / 2;
+        int rightBound = position.x + debris.width / 2;
+        int bottomBound = position.y - debris.width / 2;
+        int topBound = position.y + debris.width / 2;
+
+        int y_left = m * leftBound + b;
+        int y_right = m * rightBound + b;
+        if ((bottomBound <= y_left && y_left <= topBound) || (bottomBound <= y_right && y_right <= topBound))
+        {
+            return true;
+        }
+
+        int x_bottom = (bottomBound - b) / m;
+        int x_top = (topBound - b) / m;
+        if ((leftBound <= x_bottom && x_bottom <= rightBound) || (leftBound <= x_top && x_top <= rightBound))
+        {
+            return true;
+        }
+    }
+}
+
+bool hasCollisions(Position &linePos1, Position &linePos2)
+{
+    int m = (linePos1.y - linePos2.y) / (linePos1.x - linePos2.x);
+
+    Position center = linePos1.Midpoint(linePos2);
+
+    if (m >= 0) 
+    {
+        // Check the lines with slope m passing through upperLeft and lowerRight
+        Position upperLeft = Position(center.x - 3.2, center.y + 3.2);
+        Position lowerRight = Position(center.x + 3.2, center.y - 3.2);
+        return checkLineCollisions(upperLeft, Position(upperLeft.x + 1, upperLeft.y + m)) || checkLineCollisions(lowerRight, Position(lowerRight.x + 1, lowerRight.y + m));
+    }
+    else 
+    {
+        // Check the lines with slope m passing through lowerLeft and upperRight
+        Position lowerLeft = Position(center.x - 3.2, center.y - 3.2);
+        Position upperRight = Position(center.x + 3.2, center.y + 3.2);
+        return checkLineCollisions(lowerLeft, Position(lowerLeft.x + 1, lowerLeft.y + m)) || checkLineCollisions(upperRight, Position(upperRight.x + 1, upperRight.y + m));
+    }
 }
 
 Debris DebrisList[15] = {
