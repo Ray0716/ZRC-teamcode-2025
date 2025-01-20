@@ -6,6 +6,8 @@
 #endif
 #endif
 
+#define unreachable throw "unreachable code point reached";
+
 class Position
 {
 public:
@@ -17,12 +19,43 @@ public:
     double DistanceTo(Position &other) const;
 };
 
+enum DebrisType
+{
+    LARGE,
+    SMALL,
+    SPECIAL // ooo ahh special very special
+};
+
 class Debris
 {
 public:
     const unsigned int id;
     const unsigned int mass;
-    Debris(unsigned int id) : id(id), mass(game.GetObjectMass(id)) {}
+    unsigned int width;
+    DebrisType type;
+    Debris(unsigned int id) : id(id), mass(game.GetObjectMass(id))
+    {
+        if (id >= 0 && id <= 2)
+        {
+            type = DebrisType::LARGE;
+            width = 15;
+        }
+        else if (id >= 3 && id <= 13)
+        {
+            type = DebrisType::SMALL;
+            width = 5;
+        }
+        else if (id == 14)
+        {
+            type = DebrisType::SPECIAL;
+            width = 5;
+        }
+        else
+        {
+            // This should literally never happen. If it does, someone screwed up lol.
+            unreachable
+        }
+    }
     Position GetLocation();
     // Alias for `GetLocation`
     Position GetPosition();
@@ -97,5 +130,4 @@ Debris DebrisList[15] = {
     Debris(11),
     Debris(12),
     Debris(13),
-    Debris(14)
-};
+    Debris(14)};

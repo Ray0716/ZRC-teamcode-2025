@@ -202,3 +202,8 @@ Debris *GetNearestDebris()
     // SAFETY: Some debris must exist; therefore at some point nearestId != -1 will hold true permanently
     return &DebrisList[nearestId];
 }
+
+bool checkCollision(Position linePos1, Position linePos2)
+{
+    
+}
