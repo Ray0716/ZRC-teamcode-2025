@@ -19,13 +19,13 @@ Description
 
 <div align="center">
   
-![GitHub repo size](https://img.shields.io/github/repo-size/Ray0716/teenhacks-2025?style=for-the-badge&logo=github&logoColor=white&color=teal)
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/Ray0716/teenhacks-2025?style=for-the-badge&logo=git&logoColor=white&color=orange)
-![GitHub last commit (branch)](https://img.shields.io/github/last-commit/Ray0716/teenhacks-2025/master?style=for-the-badge&logo=commit&logoColor=white)
-![GitHub top language](https://img.shields.io/github/languages/top/Ray0716/teenhacks-2025?style=for-the-badge&logo=javascript&logoColor=white)
-![GitHub contributors](https://img.shields.io/github/contributors/Ray0716/teenhacks-2025?style=for-the-badge&color=red)
-![GitHub Repo stars](https://img.shields.io/github/stars/Ray0716/teenhacks-2025?style=for-the-badge)
-![Contributors](https://img.shields.io/github/contributors/Ray0716/teenhacks-2025?style=for-the-badge&color=dark-green) ![Issues](https://img.shields.io/github/issues/Ray0716/teenhacks-2025?style=for-the-badge) ![License](https://img.shields.io/github/license/Ray0716/teenhacks-2025?style=for-the-badge)
+![GitHub repo size](https://img.shields.io/github/repo-size/Ray0716/ZRC-teamcode-2025?style=for-the-badge&logo=github&logoColor=white&color=teal)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/Ray0716/ZRC-teamcode-2025?style=for-the-badge&logo=git&logoColor=white&color=orange)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/Ray0716/ZRC-teamcode-2025/master?style=for-the-badge&logo=commit&logoColor=white)
+![GitHub top language](https://img.shields.io/github/languages/top/Ray0716/ZRC-teamcode-2025?style=for-the-badge&logo=javascript&logoColor=white)
+![GitHub contributors](https://img.shields.io/github/contributors/Ray0716/ZRC-teamcode-2025?style=for-the-badge&color=red)
+![GitHub Repo stars](https://img.shields.io/github/stars/Ray0716/ZRC-teamcode-2025?style=for-the-badge)
+![Contributors](https://img.shields.io/github/contributors/Ray0716/ZRC-teamcode-2025?style=for-the-badge&color=dark-green) ![Issues](https://img.shields.io/github/issues/Ray0716/ZRC-teamcode-2025?style=for-the-badge) ![License](https://img.shields.io/github/license/Ray0716/ZRC-teamcode-2025?style=for-the-badge)
 
 </div>
 
