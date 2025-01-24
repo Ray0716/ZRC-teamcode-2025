@@ -12,8 +12,8 @@
 class Position
 {
 public:
-    const float x = 0.0f;
-    const float y = 0.0f;
+    float x;
+    float y;
     Position(float x, float y) : x(x), y(y) {}
     double DistanceTo(Position *other) const
     {
@@ -25,7 +25,8 @@ public:
     };
     double DistanceFromAstrobee() const
     {
-        return DistanceTo(GetRobotPosition());
+        Position robot = GetRobotPosition();
+        return DistanceTo(robot);
     };
     Position Midpoint(Position *other) const
     {
@@ -47,25 +48,25 @@ enum DebrisType
 class Debris
 {
 public:
-    const unsigned int id;
-    const unsigned int mass;
+    unsigned int id;
+    unsigned int mass;
     unsigned int width;
-    DebrisType type;
+    enum DebrisType type;
     Debris(unsigned int id) : id(id), mass(game.GetObjectMass(id))
     {
         if (id >= 0 && id <= 2)
         {
-            type = DebrisType::LARGE;
+            type = LARGE;
             width = 15;
         }
         else if (id >= 3 && id <= 13)
         {
-            type = DebrisType::SMALL;
+            type = SMALL;
             width = 5;
         }
         else if (id == 14)
         {
-            type = DebrisType::SPECIAL;
+            type = SPECIAL;
             width = 5;
         }
         else
@@ -92,173 +93,188 @@ public:
     };
 };
 
-Position GetRobotPosition()
+static Position GetRobotPosition()
 {
     return Position(game.GetRobotPositionX(), game.GetRobotPositionY());
 }
 
-float GetTime()
+static float GetTime()
 {
     return game.GetTime();
 }
 
-float GetBattery()
+static float GetBattery()
 {
     return game.GetBattery();
 }
 
-float GetScore()
+static float GetScore()
 {
     return game.GetScore();
 }
 
-const Debris *GetObjectBeingCarried()
+const Debris GetObjectBeingCarried()
 {
     if (game.GetObjectBeingCarried() >= 0)
     {
         // SAFETY (yes im pulling a Rust):
         // We just checked if the value is >= 0
-        return &(DebrisList[game.GetObjectBeingCarried()]);
+        return game.GetObjectBeingCarried();
     }
     else
     {
-        return nullptr;
+        return NULL;
     }
 }
 
-Position GetObjectLocation(int obj)
+static Position GetObjectLocation(int obj)
 {
     return Position(game.GetObjectLocX(obj), game.GetObjectLocY(obj));
 }
-Position GetObjectLocation(Debris *debris)
+static Position GetObjectLocation(Debris *debris)
 {
     return GetObjectLocation(debris->id);
 }
-Position GetObjectLocation(Debris &debris)
+static Position GetObjectLocation(Debris &debris)
 {
     return GetObjectLocation(&debris);
 }
 
-int GetObjectMass(int obj)
+static int GetObjectMass(int obj)
 {
     return game.GetObjectMass(obj);
 }
-int GetObjectMass(Debris *debris)
+static int GetObjectMass(Debris *debris)
 {
     return GetObjectMass(debris->id);
 }
-int GetObjectMass(Debris &debris)
+static int GetObjectMass(Debris &debris)
 {
     return GetObjectMass(&debris);
 }
 
-int GetObjectScore(int obj)
+static int GetObjectScore(int obj)
 {
     return game.GetObjectScore(obj);
 }
-int GetObjectScore(Debris *debris)
+static int GetObjectScore(Debris *debris)
 {
     return GetObjectScore(debris->id);
 }
-int GetObjectScore(Debris &debris)
+static int GetObjectScore(Debris &debris)
 {
     return GetObjectScore(&debris);
 }
 
-int GetObjectPenalty(int obj)
+static int GetObjectPenalty(int obj)
 {
     return game.GetObjectPenalty(obj);
 }
-int GetObjectPenalty(Debris *debris)
+static int GetObjectPenalty(Debris *debris)
 {
     return GetObjectPenalty(debris->id);
 }
-int GetObjectPenalty(Debris &debris)
+static int GetObjectPenalty(Debris &debris)
 {
     return GetObjectPenalty(&debris);
 }
 
-bool MoveTo(float x, float y)
+static bool MoveTo(float x, float y)
 {
     return game.MoveTo(x, y);
 }
-bool MoveTo(Position *pos)
+static bool MoveTo(Position *pos)
 {
     return MoveTo(pos->x, pos->y);
 }
-bool MoveTo(Position &pos)
+static bool MoveTo(Position &pos)
 {
     return MoveTo(&pos);
 }
 
-bool MoveToHome()
+static bool MoveToHome()
 {
     return game.MoveToHome();
 }
 
-bool GrabObject(int obj)
+static bool GrabObject(int obj)
 {
     return game.GrabObject(obj);
 }
-bool GrabObject(Debris *debris)
+static bool GrabObject(Debris *debris)
 {
     return GrabObject(debris->id);
 }
-bool GrabObject(Debris &debris)
+static bool GrabObject(Debris &debris)
 {
     return GrabObject(&debris);
 }
 
-bool DropObject()
+static bool DropObject()
 {
     return game.DropObject();
 }
 
-void EndGame()
+static void EndGame()
 {
     game.EndGame();
 }
 
-void MoveToVoid(float x, float y)
+static void MoveToVoid(float x, float y)
 {
     game.MoveToVoid(x, y);
 }
-void MoveToVoid(Position *pos)
+static void MoveToVoid(Position *pos)
 {
     MoveToVoid(pos->x, pos->y);
 }
-void MoveToVoid(Position &pos)
+static void MoveToVoid(Position &pos)
 {
     MoveToVoid(&pos);
 }
 
-void GrabObjectVoid(int obj)
+static void GrabObjectVoid(int obj)
 {
     game.GrabObjectVoid(obj);
 }
-void GrabObjectVoid(Debris *debris)
+static void GrabObjectVoid(Debris *debris)
 {
     GrabObjectVoid(debris->id);
 }
-void GrabObjectVoid(Debris &debris)
+static void GrabObjectVoid(Debris &debris)
 {
     GrabObjectVoid(&debris);
 }
 
-Debris (*GetAllDebris())[15]
+static Debris (*GetAllDebris())[15]
 {
+    static Debris DebrisList[15] = {
+        Debris(0), 
+        Debris(1), 
+        Debris(2), 
+        Debris(3), 
+        Debris(4),
+        Debris(5), 
+        Debris(6), 
+        Debris(7), 
+        Debris(8), 
+        Debris(9),
+        Debris(10),
+        Debris(11),
+        Debris(12),
+        Debris(13),
+        Debris(14)
+    };
     return &DebrisList;
 }
 
-Debris *GetNearestDebris()
+static const Debris GetNearestDebris()
 {
     int nearestId = -1;
     double nearestDistance = 100; // No debris can be more than sqrt(2) (?) units away, this handles that pretty well
-
     for (int i = 0; i < 15; i++)
     {
-        Debris curr = DebrisList[i];
-        double distance = curr.DistanceFromAstrobee();
+        double distance = GetObjectLocation(i).DistanceFromAstrobee();
         if (distance < nearestDistance)
         {
             nearestId = i;
@@ -267,18 +283,21 @@ Debris *GetNearestDebris()
     }
 
     // SAFETY: Some debris must exist; therefore at some point nearestId != -1 will hold true permanently
-    return &DebrisList[nearestId];
+    return Debris(nearestId);
 }
 
-bool checkLineCollisions(Position &linePos1, Position &linePos2)
+static bool checkLineCollisions(Position &linePos1, Position &linePos2)
 {
     int m = (linePos1.y - linePos2.y) / (linePos1.x - linePos2.x);
     int b = linePos1.y - m * linePos1.x;
 
+    // allocate memory to avoid hotloops of memory allocation + releasing
+    Debris debris(0);
+
     // Use the line equation to check for collisions in each Debris.
     for (int i = 0; i < 15; i++)
     {
-        Debris debris = DebrisList[i];
+        debris = Debris(i);
         Position position = debris.GetLocation();
         int leftBound = position.x - debris.width / 2;
         int rightBound = position.x + debris.width / 2;
@@ -301,41 +320,28 @@ bool checkLineCollisions(Position &linePos1, Position &linePos2)
     }
 }
 
-bool hasCollisions(Position &linePos1, Position &linePos2)
+static bool hasCollisions(Position &linePos1, Position &linePos2)
 {
     int m = (linePos1.y - linePos2.y) / (linePos1.x - linePos2.x);
 
     Position center = linePos1.Midpoint(linePos2);
 
-    if (m >= 0) 
+    if (m >= 0)
     {
         // Check the lines with slope m passing through upperLeft and lowerRight
         Position upperLeft = Position(center.x - 3.2, center.y + 3.2);
         Position lowerRight = Position(center.x + 3.2, center.y - 3.2);
-        return checkLineCollisions(upperLeft, Position(upperLeft.x + 1, upperLeft.y + m)) || checkLineCollisions(lowerRight, Position(lowerRight.x + 1, lowerRight.y + m));
+        Position firstCheck = Position(upperLeft.x + 1, upperLeft.y + m);
+        Position secondCheck = Position(lowerRight.x + 1, lowerRight.y + m);
+        return checkLineCollisions(upperLeft, firstCheck) || checkLineCollisions(lowerRight, secondCheck);
     }
-    else 
+    else
     {
         // Check the lines with slope m passing through lowerLeft and upperRight
         Position lowerLeft = Position(center.x - 3.2, center.y - 3.2);
         Position upperRight = Position(center.x + 3.2, center.y + 3.2);
-        return checkLineCollisions(lowerLeft, Position(lowerLeft.x + 1, lowerLeft.y + m)) || checkLineCollisions(upperRight, Position(upperRight.x + 1, upperRight.y + m));
+        Position firstCheck = Position(lowerLeft.x + 1, lowerLeft.y + m);
+        Position secondCheck = Position(upperRight.x + 1, upperRight.y + m);
+        return checkLineCollisions(lowerLeft, firstCheck) || checkLineCollisions(upperRight, secondCheck);
     }
 }
-
-Debris DebrisList[15] = {
-    Debris(0),
-    Debris(1),
-    Debris(2),
-    Debris(3),
-    Debris(4),
-    Debris(5),
-    Debris(6),
-    Debris(7),
-    Debris(8),
-    Debris(9),
-    Debris(10),
-    Debris(11),
-    Debris(12),
-    Debris(13),
-    Debris(14)};
