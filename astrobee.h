@@ -1,9 +1,3 @@
-#ifdef __has_include
-#if __has_include("Astrobee.h")
-#include "Astrobee.h"
-#endif
-#endif
-
 /*
 These functions are all present in the simulator,
 this is mainly just a utility for development
