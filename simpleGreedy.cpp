@@ -383,6 +383,7 @@ int inCollisionRange(int debrisIndex1, int debrisIndex2)
 // to use raw arrays. This function formerly returned
 // `map<int, list<int>[4]>`
 // Also I converted this to do for one debris (id)
+// TODO: Make this return IDs of key debris
 int (*getKeyDebris(int id))[4]
 {
     int neighbors[4] = {0, 0, 0, 0};
