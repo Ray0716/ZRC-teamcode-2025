@@ -313,6 +313,7 @@ int inCollisionRange(int debrisIndex1, int debrisIndex2) {
     return -1; // no collision
 }
 
+/*
 map<int, list<int>[4]> getKeyDebris() {
     map<int, list<int>[4]> neighbors;
     float (*debrisArray)[2] = getDebrisLocations();
@@ -333,4 +334,10 @@ map<int, list<int>[4]> getKeyDebris() {
         }
     }
     return neighbors; 
-}
+} */
+
+// getKeyDebris(debris index) returns a 2d array, each sub array is the indecies of the key derbris of one debris in each cardinal direction. 0th index subarray is north key debris, 1 is east, 2 is south, 3 is west. key debris is defined as debris that is in the area such that if we were to move the debris in a cardinal direction, it would collide with the debris. the subarray is empty if there is no key debris in that direction. to get the area that is the collision zone we can simply loop through north east south and west zones, then loop through all of the debris locations and see if they are in the zones if they are, add the debris index to the corresponding subarray that corresponds to which zone it is in. to calculate the zone dimensions we need to know the size of the debris. debris indexes 0-2 inclusive are all large debris with a lendgh and width of 15cm (0.15 meter, we use meters), and all other debris are 5 by 5 cm (0.05 meters). so for example, if we had a large debris, the north coolision zone would be defined as two vertical lines, each 0.075m away from the center of the debris. this would create a zone extending from the debris upwards with a width of the debris (0.15m). 
+// note, this modified the above comment: because we cannot use vectors in the simulation IDE, we need to use normal arrays. let's use another approahc: in our final 2d array, each subarray for each cardial direction zone will be an array with legnth 10. it will start out with all -1's. if at the end they are still all -1, then that means there are no key debris in that zone, howveer if there are, we repalce the element with the index of it. for example, if this was the first subnarray: [0, 1, 2, -1, -1, -1 ... -1] means that debris numbers 0, 1, 2 are in the north zone. now, if [-1, -1, -1 ... -1] was the last subarray, this means there are no debsi in the west zone. now this approach allows us to write the function as int** getkey... 
+
+
+
