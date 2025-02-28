@@ -133,6 +133,9 @@ public:
      * Does not return a value.
      */
     void DropObjectVoid(int obj);
+
+    void SetLayout(int layout);
+    void SetStartPosition(int pos);
 };
 
 /**
